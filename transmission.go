@@ -27,7 +27,7 @@ func (ts TrackerState) String() string {
 	case TrackerActive:
 		return "active"
 	default:
-		return fmt.Sprintf("%d", ts)
+		return fmt.Sprintf("TrackerState(%d)", ts)
 	}
 }
 
@@ -48,7 +48,7 @@ func (p Priority) String() string {
 	case PriorityHigh:
 		return "high"
 	default:
-		return fmt.Sprintf("%d", p)
+		return fmt.Sprintf("Priority(%d)", p)
 	}
 }
 
@@ -108,7 +108,7 @@ func (s TorrentStatus) String() string {
 	case TorrentStatusSeed:
 		return "seeding"
 	default:
-		return fmt.Sprintf("%d", s)
+		return fmt.Sprintf("TorrentStatus(%d)", s)
 	}
 }
 
