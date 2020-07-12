@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"flag"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -19,9 +21,10 @@ var (
 	telemetryAddr = flag.String("telemetry.addr", ":9742", "address for transmission exporter")
 	metricsPath   = flag.String("telemetry.path", "/metrics", "URL path for surfacing collected metrics")
 
-	transmissionRPC  = flag.String("transmission.rpc", "http://localhost:9091/transmission/rpc", "URL of Transmission RPC endpoint")
-	transmissionUser = flag.String("transmission.user", "", "Transmission username")
-	transmissionPass = flag.String("transmission.pass", "", "Transmission password")
+	transmissionRPC      = flag.String("transmission.rpc", "http://localhost:9091/transmission/rpc", "URL of Transmission RPC endpoint")
+	transmissionUser     = flag.String("transmission.user", "", "Transmission username")
+	transmissionPass     = flag.String("transmission.pass", "", "Transmission password")
+	transmissionPassFile = flag.String("transmission.pass-file", "", "File to read Transmission password from")
 )
 
 type Collector struct {
@@ -84,13 +87,27 @@ func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 }
 
 func main() {
+	log.SetFlags(0)
 	flag.Parse()
+
+	if *transmissionPass != "" && *transmissionPassFile != "" {
+		log.Fatal("shouldn't specify both -transmission.pass and -transmission.pass-file")
+	}
+
+	pass := *transmissionPass
+	if *transmissionPassFile != "" {
+		b, err := ioutil.ReadFile(*transmissionPassFile)
+		if err != nil {
+			log.Fatalf("couldn't read password: %s", err)
+		}
+		pass = string(bytes.TrimRight(b, "\n"))
+	}
 
 	cl := &transmission.Client{
 		Client:   http.DefaultClient,
 		Endpoint: *transmissionRPC,
 		Username: *transmissionUser,
-		Password: *transmissionPass,
+		Password: pass,
 	}
 
 	prometheus.MustRegister(NewCollector(cl))
