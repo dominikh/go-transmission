@@ -73,8 +73,8 @@ func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for _, info := range res {
-		for _, tr := range info.Trackers {
-			ch <- prometheus.MustNewConstMetric(c.descTorrentTrackers, prometheus.GaugeValue, 1, info.Hash, tr.Announce)
+		for _, tr := range info.TrackerStats {
+			ch <- prometheus.MustNewConstMetric(c.descTorrentTrackers, prometheus.GaugeValue, 1, info.Hash, tr.Host)
 		}
 		ch <- prometheus.MustNewConstMetric(c.descTorrentStatus, prometheus.GaugeValue, 1, info.Hash, info.Status.String())
 		ch <- prometheus.MustNewConstMetric(c.descTorrentSize, prometheus.GaugeValue, float64(info.SizeWhenDone), info.Hash)
