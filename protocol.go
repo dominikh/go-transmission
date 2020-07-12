@@ -420,39 +420,39 @@ type SessionInfo struct {
 }
 
 type trackerStats struct {
-	Announce              string `json:"announce"`
-	AnnounceState         int    `json:"announceState"`
-	DownloadCount         int    `json:"downloadCount"`
-	HasAnnounced          bool   `json:"hasAnnounced"`
-	HasScraped            bool   `json:"hasScraped"`
-	Host                  string `json:"host"`
-	ID                    int    `json:"id"`
-	IsBackup              bool   `json:"isBackup"`
-	LastAnnouncePeerCount int    `json:"lastAnnouncePeerCount"`
-	LastAnnounceResult    string `json:"lastAnnounceResult"`
-	LastAnnounceStartTime int    `json:"lastAnnounceStartTime"`
-	LastAnnounceSucceeded bool   `json:"lastAnnounceSucceeded"`
-	LastAnnounceTime      int    `json:"lastAnnounceTime"`
-	LastAnnounceTimedOut  bool   `json:"lastAnnounceTimedOut"`
-	LastScrapeResult      string `json:"lastScrapeResult"`
-	LastScrapeStartTime   int    `json:"lastScrapeStartTime"`
-	LastScrapeSucceeded   bool   `json:"lastScrapeSucceeded"`
-	LastScrapeTime        int    `json:"lastScrapeTime"`
-	LastScrapeTimedOut    bool   `json:"lastScrapeTimedOut"`
-	LeecherCount          int    `json:"leecherCount"`
-	NextAnnounceTime      int    `json:"nextAnnounceTime"`
-	NextScrapeTime        int    `json:"nextScrapeTime"`
-	Scrape                string `json:"scrape"`
-	ScrapeState           int    `json:"scrapeState"`
-	SeederCount           int    `json:"seederCount"`
-	Tier                  int    `json:"tier"`
+	Announce              string       `json:"announce"`
+	AnnounceState         TrackerState `json:"announceState"`
+	DownloadCount         int          `json:"downloadCount"`
+	HasAnnounced          bool         `json:"hasAnnounced"`
+	HasScraped            bool         `json:"hasScraped"`
+	Host                  string       `json:"host"`
+	ID                    int          `json:"id"`
+	IsBackup              bool         `json:"isBackup"`
+	LastAnnouncePeerCount int          `json:"lastAnnouncePeerCount"`
+	LastAnnounceResult    string       `json:"lastAnnounceResult"`
+	LastAnnounceStartTime int          `json:"lastAnnounceStartTime"`
+	LastAnnounceSucceeded bool         `json:"lastAnnounceSucceeded"`
+	LastAnnounceTime      int          `json:"lastAnnounceTime"`
+	LastAnnounceTimedOut  bool         `json:"lastAnnounceTimedOut"`
+	LastScrapeResult      string       `json:"lastScrapeResult"`
+	LastScrapeStartTime   int          `json:"lastScrapeStartTime"`
+	LastScrapeSucceeded   bool         `json:"lastScrapeSucceeded"`
+	LastScrapeTime        int          `json:"lastScrapeTime"`
+	LastScrapeTimedOut    bool         `json:"lastScrapeTimedOut"`
+	LeecherCount          int          `json:"leecherCount"`
+	NextAnnounceTime      int          `json:"nextAnnounceTime"`
+	NextScrapeTime        int          `json:"nextScrapeTime"`
+	Scrape                string       `json:"scrape"`
+	ScrapeState           TrackerState `json:"scrapeState"`
+	SeederCount           int          `json:"seederCount"`
+	Tier                  int          `json:"tier"`
 }
 
 type TrackerStats struct {
 	// the full announce URL
 	Announce string
 	// is the tracker announcing, waiting, queued, etc
-	AnnounceState int
+	AnnounceState TrackerState
 	// how many downloads this tracker knows of (-1 means it does not know)
 	DownloadCount int
 	// whether or not we've ever sent this tracker an announcement
@@ -505,7 +505,7 @@ type TrackerStats struct {
 	// the full scrape URL
 	Scrape string
 	// is the tracker scraping, waiting, queued, etc
-	ScrapeState int
+	ScrapeState TrackerState
 	// number of seeders this tracker knows of (-1 means it does not know)
 	SeederCount int
 	// which tier this tracker is in

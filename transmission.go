@@ -7,6 +7,30 @@ import (
 	"net/http"
 )
 
+type TrackerState int
+
+const (
+	TrackerInactive TrackerState = 0
+	TrackerWaiting  TrackerState = 1
+	TrackerQueued   TrackerState = 2
+	TrackerActive   TrackerState = 3
+)
+
+func (ts TrackerState) String() string {
+	switch ts {
+	case TrackerInactive:
+		return "inactive"
+	case TrackerWaiting:
+		return "waiting"
+	case TrackerQueued:
+		return "queued"
+	case TrackerActive:
+		return "active"
+	default:
+		return fmt.Sprintf("%d", ts)
+	}
+}
+
 type Priority int
 
 const (
